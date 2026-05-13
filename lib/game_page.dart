@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:scribble/scribble.dart';
 import 'websocket_service.dart';
 
@@ -29,6 +31,7 @@ class _GamePageState extends State<GamePage> {
   bool _isErasing = false;
   bool _canUndo = false;
   bool _canRedo = false;
+  String? _lastStrokeJson;
 
   @override
   void initState() {
@@ -50,6 +53,21 @@ class _GamePageState extends State<GamePage> {
       _selectedWidth = state.selectedWidth;
     });
     _updateUndoRedo();
+    _sendDrawData();
+  }
+
+  void _sendDrawData() {
+    final sketchJson = jsonEncode(_notifier.currentSketch.toJson());
+    if (sketchJson == _lastStrokeJson) return;
+    _lastStrokeJson = sketchJson;
+
+    final url =
+        'http://${widget.wsService.serverAddress}:${widget.wsService.serverPort}/api/draw';
+    http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'stroke': sketchJson}),
+    );
   }
 
   void _updateUndoRedo() {
