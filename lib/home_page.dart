@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
     if (braceletId.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('请输入手环编号')));
+      ).showSnackBar(const SnackBar(content: Text('请输入CN')));
       return;
     }
 
@@ -241,8 +241,8 @@ class _HomePageState extends State<HomePage> {
                           child: TextField(
                             controller: _braceletController,
                             decoration: InputDecoration(
-                              labelText: '手环编号',
-                              hintText: '请输入手环编号',
+                              labelText: 'CN',
+                              hintText: '请输入CN',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
