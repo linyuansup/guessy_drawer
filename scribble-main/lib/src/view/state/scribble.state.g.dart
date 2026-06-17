@@ -12,10 +12,14 @@ _$DrawingImpl _$$DrawingImplFromJson(Map<String, dynamic> json) =>
       activeLine: json['activeLine'] == null
           ? null
           : SketchLine.fromJson(json['activeLine'] as Map<String, dynamic>),
-      allowedPointersMode: $enumDecodeNullable(
-              _$ScribblePointerModeEnumMap, json['allowedPointersMode']) ??
+      allowedPointersMode:
+          $enumDecodeNullable(
+            _$ScribblePointerModeEnumMap,
+            json['allowedPointersMode'],
+          ) ??
           ScribblePointerMode.all,
-      activePointerIds: (json['activePointerIds'] as List<dynamic>?)
+      activePointerIds:
+          (json['activePointerIds'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
               .toList() ??
           const [],
@@ -55,10 +59,14 @@ const _$ScribblePointerModeEnumMap = {
 _$ErasingImpl _$$ErasingImplFromJson(Map<String, dynamic> json) =>
     _$ErasingImpl(
       sketch: Sketch.fromJson(json['sketch'] as Map<String, dynamic>),
-      allowedPointersMode: $enumDecodeNullable(
-              _$ScribblePointerModeEnumMap, json['allowedPointersMode']) ??
+      allowedPointersMode:
+          $enumDecodeNullable(
+            _$ScribblePointerModeEnumMap,
+            json['allowedPointersMode'],
+          ) ??
           ScribblePointerMode.all,
-      activePointerIds: (json['activePointerIds'] as List<dynamic>?)
+      activePointerIds:
+          (json['activePointerIds'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
               .toList() ??
           const [],

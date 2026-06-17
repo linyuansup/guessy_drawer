@@ -43,8 +43,9 @@ void main() {
 
       test('simplifies path', () async {
         final simplified = sut.simplify(path, pixelTolerance: 1);
-        final pathOnlyOutliers =
-            path.where((p) => p.y == 2 || p.y == 0).toList();
+        final pathOnlyOutliers = path
+            .where((p) => p.y == 2 || p.y == 0)
+            .toList();
         expect(simplified, pathOnlyOutliers);
       });
     });

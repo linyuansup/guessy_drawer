@@ -12,10 +12,8 @@ typedef Selector<FromT, ToT> = ToT Function(FromT value);
 /// {@endtemplate}
 class SelectValueNotifier<FromT, ToT> extends ValueNotifier<ToT> {
   /// {@macro selected_value_notifier}
-  SelectValueNotifier({
-    required this.parentNotifier,
-    required this.selector,
-  }) : super(selector(parentNotifier.value)) {
+  SelectValueNotifier({required this.parentNotifier, required this.selector})
+    : super(selector(parentNotifier.value)) {
     parentNotifier.addListener(_updateFromParent);
   }
 
@@ -55,9 +53,6 @@ extension SelectValueNotifierX<FromT> on ValueNotifier<FromT> {
   SelectValueNotifier<FromT, ToT> select<ToT>(
     ToT Function(FromT value) selector,
   ) {
-    return SelectValueNotifier(
-      parentNotifier: this,
-      selector: selector,
-    );
+    return SelectValueNotifier(parentNotifier: this, selector: selector);
   }
 }

@@ -116,11 +116,10 @@ sealed class ScribbleState with _$ScribbleState {
   /// Returns the list of lines that should be drawn on the canvas by
   /// combining the sketches lines with the current active line if it exists.
   List<SketchLine> get lines => map(
-        drawing: (d) => d.activeLine == null
-            ? sketch.lines
-            : [...sketch.lines, d.activeLine!],
-        erasing: (d) => d.sketch.lines,
-      );
+    drawing: (d) =>
+        d.activeLine == null ? sketch.lines : [...sketch.lines, d.activeLine!],
+    erasing: (d) => d.sketch.lines,
+  );
 
   /// Returns a set of [PointerDeviceKind] that represents the currently
   /// supported devices, depending on [ScribbleState.allowedPointersMode].

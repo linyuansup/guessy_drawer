@@ -13,8 +13,8 @@ class WhereValueNotifierFromParent<T> extends WhereValueNotifier<T> {
   WhereValueNotifierFromParent({
     required this.parentNotifier,
     required WhereFilter<T> updateShouldNotify,
-  })  : filter = updateShouldNotify,
-        super(parentNotifier.value) {
+  }) : filter = updateShouldNotify,
+       super(parentNotifier.value) {
     parentNotifier.addListener(_parentListener);
   }
 

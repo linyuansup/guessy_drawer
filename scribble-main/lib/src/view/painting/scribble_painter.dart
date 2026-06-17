@@ -25,10 +25,7 @@ class ScribblePainter extends CustomPainter with SketchLinePathMixin {
     final paint = Paint()..style = PaintingStyle.fill;
 
     for (var i = 0; i < sketch.lines.length; ++i) {
-      final path = getPathForLine(
-        sketch.lines[i],
-        scaleFactor: scaleFactor,
-      );
+      final path = getPathForLine(sketch.lines[i], scaleFactor: scaleFactor);
       if (path == null) {
         continue;
       }

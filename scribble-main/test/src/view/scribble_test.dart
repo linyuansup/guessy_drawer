@@ -18,31 +18,33 @@ void main() {
         );
       }
 
-      testWidgets(
-        'sets simulatePressure on ScribbleEditingPainter',
-        (WidgetTester tester) async {
-          await tester.pumpWidget(build(simulatePressure: true));
-          final finder = find.byType(CustomPaint);
-          final widgets =
-              finder.evaluate().map((e) => e.widget).cast<CustomPaint>();
-          final painters = widgets.map((e) => e.foregroundPainter).toList();
-          final painter = painters.whereType<ScribbleEditingPainter>().first;
-          expect(painter.simulatePressure, isTrue);
-        },
-      );
+      testWidgets('sets simulatePressure on ScribbleEditingPainter', (
+        WidgetTester tester,
+      ) async {
+        await tester.pumpWidget(build(simulatePressure: true));
+        final finder = find.byType(CustomPaint);
+        final widgets = finder
+            .evaluate()
+            .map((e) => e.widget)
+            .cast<CustomPaint>();
+        final painters = widgets.map((e) => e.foregroundPainter).toList();
+        final painter = painters.whereType<ScribbleEditingPainter>().first;
+        expect(painter.simulatePressure, isTrue);
+      });
 
-      testWidgets(
-        'sets simulatePressure on ScribblePainter',
-        (WidgetTester tester) async {
-          await tester.pumpWidget(build(simulatePressure: true));
-          final finder = find.byType(CustomPaint);
-          final widgets =
-              finder.evaluate().map((e) => e.widget).cast<CustomPaint>();
-          final painters = widgets.map((e) => e.painter).toList();
-          final painter = painters.whereType<ScribblePainter>().first;
-          expect(painter.simulatePressure, isTrue);
-        },
-      );
+      testWidgets('sets simulatePressure on ScribblePainter', (
+        WidgetTester tester,
+      ) async {
+        await tester.pumpWidget(build(simulatePressure: true));
+        final finder = find.byType(CustomPaint);
+        final widgets = finder
+            .evaluate()
+            .map((e) => e.widget)
+            .cast<CustomPaint>();
+        final painters = widgets.map((e) => e.painter).toList();
+        final painter = painters.whereType<ScribblePainter>().first;
+        expect(painter.simulatePressure, isTrue);
+      });
     });
   });
 }

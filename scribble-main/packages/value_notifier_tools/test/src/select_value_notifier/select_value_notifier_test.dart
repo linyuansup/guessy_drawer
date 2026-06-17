@@ -30,8 +30,7 @@ void main() {
     });
 
     group('notifyListeners()', () {
-      test(
-          'should notify listeners when the new value is different from the '
+      test('should notify listeners when the new value is different from the '
           'previous value', () {
         notifier.value = (interesting: 1, uninteresting: 1);
         verify(() => notifierListener.call());
@@ -39,8 +38,7 @@ void main() {
         expect(sut.value, 1);
       });
 
-      test(
-          'should not notify listeners when the new value is the same as the '
+      test('should not notify listeners when the new value is the same as the '
           'previous value', () {
         notifier.value = (interesting: 0, uninteresting: 1);
         verify(() => notifierListener.call());

@@ -28,12 +28,12 @@ class GestureCatcher extends StatelessWidget {
       gestures: {
         _GestureCatcherRecognizer:
             GestureRecognizerFactoryWithHandlers<_GestureCatcherRecognizer>(
-          () => _GestureCatcherRecognizer(
-            debugOwner: this,
-            pointerKindsToCatch: pointerKindsToCatch,
-          ),
-          (_GestureCatcherRecognizer instance) {},
-        ),
+              () => _GestureCatcherRecognizer(
+                debugOwner: this,
+                pointerKindsToCatch: pointerKindsToCatch,
+              ),
+              (_GestureCatcherRecognizer instance) {},
+            ),
       },
       child: child,
     );

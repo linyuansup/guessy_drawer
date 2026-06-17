@@ -60,8 +60,9 @@ abstract class ScribbleNotifierBase extends ValueNotifier<ScribbleState> {
     double pixelRatio = 1.0,
     ui.ImageByteFormat format = ui.ImageByteFormat.png,
   }) async {
-    final renderObject = repaintBoundaryKey.currentContext?.findRenderObject()
-        as RenderRepaintBoundary?;
+    final renderObject =
+        repaintBoundaryKey.currentContext?.findRenderObject()
+            as RenderRepaintBoundary?;
     if (renderObject == null) {
       throw StateError(
         "Tried to convert Scribble to Image, but no valid RenderObject was "
@@ -98,19 +99,19 @@ class ScribbleNotifier extends ScribbleNotifierBase
     /// {@macro view.state.scribble_state.simplification_tolerance}
     double simplificationTolerance = 0,
   }) : super(
-          ScribbleState.drawing(
-            sketch: switch (sketch) {
-              Sketch() => simplifier.simplifySketch(
-                  sketch,
-                  pixelTolerance: simplificationTolerance,
-                ),
-              null => const Sketch(lines: []),
-            },
-            selectedWidth: widths[0],
-            allowedPointersMode: allowedPointersMode,
-            simplificationTolerance: simplificationTolerance,
-          ),
-        ) {
+         ScribbleState.drawing(
+           sketch: switch (sketch) {
+             Sketch() => simplifier.simplifySketch(
+               sketch,
+               pixelTolerance: simplificationTolerance,
+             ),
+             null => const Sketch(lines: []),
+           },
+           selectedWidth: widths[0],
+           allowedPointersMode: allowedPointersMode,
+           simplificationTolerance: simplificationTolerance,
+         ),
+       ) {
     this.maxHistoryLength = maxHistoryLength;
   }
 
@@ -147,9 +148,7 @@ class ScribbleNotifier extends ScribbleNotifierBase
     ScribbleState historyValue,
     ScribbleState currentState,
   ) {
-    return currentState.copyWith(
-      sketch: historyValue.sketch,
-    );
+    return currentState.copyWith(sketch: historyValue.sketch);
   }
 
   /// Can be used to update the state of the Sketch externally (e.g. when
@@ -161,13 +160,8 @@ class ScribbleNotifier extends ScribbleNotifierBase
   /// The sketch will be simplified using the currently set simplification
   /// tolerance. If you don't want simplification, call
   /// [setSimplificationTolerance] to set it to 0.
-  void setSketch({
-    required Sketch sketch,
-    bool addToUndoHistory = true,
-  }) {
-    final newState = value.copyWith(
-      sketch: sketch,
-    );
+  void setSketch({required Sketch sketch, bool addToUndoHistory = true}) {
+    final newState = value.copyWith(sketch: sketch);
     if (addToUndoHistory) {
       value = newState;
     } else {
@@ -179,20 +173,16 @@ class ScribbleNotifier extends ScribbleNotifierBase
   void clear() {
     value = switch (value) {
       final Drawing d => d.copyWith(
-          sketch: const Sketch(lines: []),
-          activeLine: null,
-        ),
-      final Erasing e => e.copyWith(
-          sketch: const Sketch(lines: []),
-        ),
+        sketch: const Sketch(lines: []),
+        activeLine: null,
+      ),
+      final Erasing e => e.copyWith(sketch: const Sketch(lines: [])),
     };
   }
 
   /// Sets the width of the next line
   void setStrokeWidth(double strokeWidth) {
-    temporaryValue = value.copyWith(
-      selectedWidth: strokeWidth,
-    );
+    temporaryValue = value.copyWith(selectedWidth: strokeWidth);
   }
 
   /// Switches to eraser mode
@@ -209,9 +199,7 @@ class ScribbleNotifier extends ScribbleNotifierBase
   /// Sets the current mode of allowed pointers to the given
   /// [ScribblePointerMode]
   void setAllowedPointersMode(ScribblePointerMode allowedPointersMode) {
-    temporaryValue = value.copyWith(
-      allowedPointersMode: allowedPointersMode,
-    );
+    temporaryValue = value.copyWith(allowedPointersMode: allowedPointersMode);
   }
 
   /// Sets the zoom factor to allow for adjusting line width.
@@ -220,9 +208,7 @@ class ScribbleNotifier extends ScribbleNotifierBase
   /// actually selected to allow for drawing details. Has to be greater than 0.
   void setScaleFactor(double factor) {
     assert(factor > 0, "The scale factor must be greater than 0.");
-    temporaryValue = value.copyWith(
-      scaleFactor: factor,
-    );
+    temporaryValue = value.copyWith(scaleFactor: factor);
   }
 
   /// Sets the color of the pen to the given color.
@@ -257,9 +243,7 @@ class ScribbleNotifier extends ScribbleNotifierBase
   /// Changing this value by itself will only affect future lines. If you want
   /// to simplify existing lines, see [simplify].
   void setSimplificationTolerance(double degree) {
-    temporaryValue = value.copyWith(
-      simplificationTolerance: degree,
-    );
+    temporaryValue = value.copyWith(simplificationTolerance: degree);
   }
 
   /// Simplifies the current sketch to the current simplification degree using
@@ -284,8 +268,9 @@ class ScribbleNotifier extends ScribbleNotifierBase
   void onPointerHover(PointerHoverEvent event) {
     if (!value.supportedPointerKinds.contains(event.kind)) return;
     temporaryValue = value.copyWith(
-      pointerPosition:
-          event.distance > 10000 ? null : _getPointFromEvent(event),
+      pointerPosition: event.distance > 10000
+          ? null
+          : _getPointFromEvent(event),
     );
   }
 
@@ -301,10 +286,8 @@ class ScribbleNotifier extends ScribbleNotifierBase
         drawing: (s) =>
             // If the current line already contains something
             (s.activeLine != null && s.activeLine!.points.length > 2)
-                ? _finishLineForState(s)
-                : s.copyWith(
-                    activeLine: null,
-                  ),
+            ? _finishLineForState(s)
+            : s.copyWith(activeLine: null),
         erasing: (s) => s,
       );
     } else if (value is Drawing) {
@@ -327,15 +310,14 @@ class ScribbleNotifier extends ScribbleNotifierBase
   void onPointerUpdate(PointerMoveEvent event) {
     if (!value.supportedPointerKinds.contains(event.kind)) return;
     if (!value.active) {
-      temporaryValue = value.copyWith(
-        pointerPosition: null,
-      );
+      temporaryValue = value.copyWith(pointerPosition: null);
       return;
     }
     if (value is Drawing) {
-      temporaryValue = _addPoint(event, value).copyWith(
-        pointerPosition: _getPointFromEvent(event),
-      );
+      temporaryValue = _addPoint(
+        event,
+        value,
+      ).copyWith(pointerPosition: _getPointFromEvent(event));
     } else if (value is Erasing) {
       final erasedState = _erasePoint(event);
       // Check if content was actually erased
@@ -357,13 +339,15 @@ class ScribbleNotifier extends ScribbleNotifierBase
   @override
   void onPointerUp(PointerUpEvent event) {
     if (!value.supportedPointerKinds.contains(event.kind)) return;
-    final pos =
-        event.kind == PointerDeviceKind.mouse ? value.pointerPosition : null;
+    final pos = event.kind == PointerDeviceKind.mouse
+        ? value.pointerPosition
+        : null;
     if (value is Drawing) {
       value = _finishLineForState(_addPoint(event, value)).copyWith(
         pointerPosition: pos,
-        activePointerIds:
-            value.activePointerIds.where((id) => id != event.pointer).toList(),
+        activePointerIds: value.activePointerIds
+            .where((id) => id != event.pointer)
+            .toList(),
       );
     } else if (value is Erasing) {
       final erasedState = _erasePoint(event);
@@ -394,8 +378,9 @@ class ScribbleNotifier extends ScribbleNotifierBase
     if (value is Drawing) {
       value = _finishLineForState(_addPoint(event, value)).copyWith(
         pointerPosition: null,
-        activePointerIds:
-            value.activePointerIds.where((id) => id != event.pointer).toList(),
+        activePointerIds: value.activePointerIds
+            .where((id) => id != event.pointer)
+            .toList(),
       );
     } else if (value is Erasing) {
       final erasedState = _erasePoint(event);
@@ -424,8 +409,9 @@ class ScribbleNotifier extends ScribbleNotifierBase
     if (!value.supportedPointerKinds.contains(event.kind)) return;
     temporaryValue = _finishLineForState(value).copyWith(
       pointerPosition: null,
-      activePointerIds:
-          value.activePointerIds.where((id) => id != event.pointer).toList(),
+      activePointerIds: value.activePointerIds
+          .where((id) => id != event.pointer)
+          .toList(),
     );
   }
 
@@ -439,10 +425,7 @@ class ScribbleNotifier extends ScribbleNotifierBase
     if (distanceToLast <= kPrecisePointerPanSlop / s.scaleFactor) return s;
     return s.copyWith(
       activeLine: currentLine.copyWith(
-        points: [
-          ...currentLine.points,
-          _getPointFromEvent(event),
-        ],
+        points: [...currentLine.points, _getPointFromEvent(event)],
       ),
     );
   }
@@ -462,11 +445,7 @@ class ScribbleNotifier extends ScribbleNotifierBase
       return null;
     }
 
-    return value.copyWith(
-      sketch: value.sketch.copyWith(
-        lines: filteredLines,
-      ),
-    );
+    return value.copyWith(sketch: value.sketch.copyWith(lines: filteredLines));
   }
 
   /// Converts a pointer event to the [Point] on the canvas.
@@ -474,7 +453,7 @@ class ScribbleNotifier extends ScribbleNotifierBase
     final p = event.pressureMin == event.pressureMax
         ? 0.5
         : (event.pressure - event.pressureMin) /
-            (event.pressureMax - event.pressureMin);
+              (event.pressureMax - event.pressureMin);
     return Point(
       event.localPosition.dx,
       event.localPosition.dy,

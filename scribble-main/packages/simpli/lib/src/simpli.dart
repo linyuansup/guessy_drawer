@@ -17,8 +17,10 @@ abstract class Simpli {
     List<Point> points, {
     double pixelTolerance = 50.0,
   }) {
-    return const RdpSimplifier()
-        .simplify(points, pixelTolerance: pixelTolerance);
+    return const RdpSimplifier().simplify(
+      points,
+      pixelTolerance: pixelTolerance,
+    );
   }
 
   /// Simplifies a list of points using the Visvalingam algorithm
@@ -27,7 +29,9 @@ abstract class Simpli {
     List<Point<num>> points, {
     double pixelTolerance = 50.0,
   }) {
-    return const VisvalingamSimplifier()
-        .simplify(points, pixelTolerance: pixelTolerance);
+    return const VisvalingamSimplifier().simplify(
+      points,
+      pixelTolerance: pixelTolerance,
+    );
   }
 }

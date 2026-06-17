@@ -7,10 +7,10 @@ part of 'point.dart';
 // **************************************************************************
 
 _$PointImpl _$$PointImplFromJson(Map<String, dynamic> json) => _$PointImpl(
-      (json['x'] as num).toDouble(),
-      (json['y'] as num).toDouble(),
-      pressure: (json['pressure'] as num?)?.toDouble() ?? 0.5,
-    );
+  (json['x'] as num).toDouble(),
+  (json['y'] as num).toDouble(),
+  pressure: (json['pressure'] as num?)?.toDouble() ?? 0.5,
+);
 
 Map<String, dynamic> _$$PointImplToJson(_$PointImpl instance) =>
     <String, dynamic>{

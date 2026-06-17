@@ -17,11 +17,9 @@ mixin SketchLinePathMixin {
   ///
   /// If [simulatePressure] is true, the line will be drawn as if it had
   /// pressure information, if all its points have the same pressure.
-  Path? getPathForLine(
-    SketchLine line, {
-    double scaleFactor = 1.0,
-  }) {
-    final needSimulate = simulatePressure &&
+  Path? getPathForLine(SketchLine line, {double scaleFactor = 1.0}) {
+    final needSimulate =
+        simulatePressure &&
         line.points.length > 1 &&
         line.points.every((p) => p.pressure == line.points.first.pressure);
     final points = line.points
@@ -37,13 +35,12 @@ mixin SketchLinePathMixin {
     if (outlinePoints.isEmpty) {
       return null;
     } else if (outlinePoints.length < 2) {
-      return Path()
-        ..addOval(
-          Rect.fromCircle(
-            center: Offset(outlinePoints[0].dx, outlinePoints[0].dy),
-            radius: 1,
-          ),
-        );
+      return Path()..addOval(
+        Rect.fromCircle(
+          center: Offset(outlinePoints[0].dx, outlinePoints[0].dy),
+          radius: 1,
+        ),
+      );
     } else {
       final path = Path()..moveTo(outlinePoints[0].dx, outlinePoints[0].dy);
 

@@ -39,10 +39,7 @@ class Hint {
 class HomePage extends StatefulWidget {
   final WebSocketService wsService;
 
-  const HomePage({
-    super.key,
-    required this.wsService,
-  });
+  const HomePage({super.key, required this.wsService});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -72,12 +69,16 @@ class _HomePageState extends State<HomePage> {
     _messageSubscription = widget.wsService.messageStream.listen((data) {
       if (data is List && data.length == 1 && data[0] == 2) {
         if (mounted) {
-          Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+          Navigator.of(
+            context,
+          ).pushNamedAndRemoveUntil('/home', (route) => false);
         }
       }
     });
 
-    _connectionSubscription = widget.wsService.connectionStream.listen((isConnected) {
+    _connectionSubscription = widget.wsService.connectionStream.listen((
+      isConnected,
+    ) {
       if (!mounted) return;
       if (isConnected) {
         _showConnectionSnackBar('连接已恢复', isError: false);
@@ -125,16 +126,15 @@ class _HomePageState extends State<HomePage> {
 
     final braceletId = _braceletController.text.trim();
     if (braceletId.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('请输入手环编号'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('请输入手环编号')));
       return;
     }
 
     try {
-      final url = 'http://$_serverAddress:$_serverPort/api/start?braceletId=$braceletId&question=${Uri.encodeComponent(_selectedQuestion!.content)}';
+      final url =
+          'http://$_serverAddress:$_serverPort/api/start?braceletId=$braceletId&question=${Uri.encodeComponent(_selectedQuestion!.content)}';
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -158,10 +158,7 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('启动失败: $e'),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text('启动失败: $e'), backgroundColor: Colors.red),
       );
     }
   }
@@ -197,75 +194,127 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = const Color(0xFF3B82F6);
+
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.quiz,
-                  size: 80,
-                  color: Colors.blue,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [primary.withOpacity(0.08), Colors.white],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 520),
+              child: Card(
+                elevation: 6,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                const SizedBox(height: 16),
-                const Text(
-                  '选择题目',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 28,
+                    vertical: 32,
                   ),
-                ),
-                const SizedBox(height: 32),
-                SizedBox(
-                  width: 300,
-                  child: TextField(
-                    controller: _braceletController,
-                    decoration: const InputDecoration(
-                      labelText: '手环编号',
-                      hintText: '请输入手环编号',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.watch),
-                    ),
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                if (!_hasLoadedQuestions) ...[
-                  FilledButton.icon(
-                    onPressed: _isLoadingQuestions ? null : _fetchQuestions,
-                    icon: _isLoadingQuestions
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.quiz, size: 72, color: primary),
+                        const SizedBox(height: 12),
+                        const Text(
+                          '选择题目',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: 320,
+                          child: TextField(
+                            controller: _braceletController,
+                            decoration: InputDecoration(
+                              labelText: '手环编号',
+                              hintText: '请输入手环编号',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              prefixIcon: const Icon(Icons.watch),
                             ),
-                          )
-                        : const Icon(Icons.download),
-                    label: const Text('加载题目'),
-                  ),
-                ] else ...[
-                  _buildQuestionsList(),
-                  const SizedBox(height: 24),
-                  FilledButton(
-                    onPressed: _selectedQuestion == null ? null : _confirmSelection,
-                    child: const Text('确认'),
-                  ),
-                  if (_questionsError != null) ...[
-                    const SizedBox(height: 16),
-                    Text(
-                      _questionsError!,
-                      style: const TextStyle(color: Colors.red, fontSize: 14),
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        if (!_hasLoadedQuestions) ...[
+                          FilledButton.icon(
+                            onPressed: _isLoadingQuestions
+                                ? null
+                                : _fetchQuestions,
+                            icon: _isLoadingQuestions
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Icon(Icons.download),
+                            label: const Text('加载题目'),
+                            style: FilledButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ] else ...[
+                          _buildQuestionsList(),
+                          const SizedBox(height: 18),
+                          FilledButton(
+                            onPressed: _selectedQuestion == null
+                                ? null
+                                : _confirmSelection,
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 12,
+                              ),
+                              child: Text('确认'),
+                            ),
+                            style: FilledButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          if (_questionsError != null) ...[
+                            const SizedBox(height: 12),
+                            Text(
+                              _questionsError!,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ],
                     ),
-                  ],
-                ],
-              ],
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -316,9 +365,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: isSelected ? Colors.blue[50] : null,
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey[200]!),
-                ),
+                border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
               ),
               child: Row(
                 children: [
@@ -332,7 +379,9 @@ class _HomePageState extends State<HomePage> {
                       question.content,
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        fontWeight: isSelected
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                       ),
                     ),
                   ),

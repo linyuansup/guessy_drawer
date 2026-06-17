@@ -12,7 +12,8 @@ part of 'sketch_line.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 SketchLine _$SketchLineFromJson(Map<String, dynamic> json) {
   return _SketchLine.fromJson(json);
@@ -42,8 +43,9 @@ mixin _$SketchLine {
 /// @nodoc
 abstract class $SketchLineCopyWith<$Res> {
   factory $SketchLineCopyWith(
-          SketchLine value, $Res Function(SketchLine) then) =
-      _$SketchLineCopyWithImpl<$Res, SketchLine>;
+    SketchLine value,
+    $Res Function(SketchLine) then,
+  ) = _$SketchLineCopyWithImpl<$Res, SketchLine>;
   @useResult
   $Res call({List<Point> points, int color, double width});
 }
@@ -67,20 +69,23 @@ class _$SketchLineCopyWithImpl<$Res, $Val extends SketchLine>
     Object? color = null,
     Object? width = null,
   }) {
-    return _then(_value.copyWith(
-      points: null == points
-          ? _value.points
-          : points // ignore: cast_nullable_to_non_nullable
-              as List<Point>,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as int,
-      width: null == width
-          ? _value.width
-          : width // ignore: cast_nullable_to_non_nullable
-              as double,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            points: null == points
+                ? _value.points
+                : points // ignore: cast_nullable_to_non_nullable
+                      as List<Point>,
+            color: null == color
+                ? _value.color
+                : color // ignore: cast_nullable_to_non_nullable
+                      as int,
+            width: null == width
+                ? _value.width
+                : width // ignore: cast_nullable_to_non_nullable
+                      as double,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -88,8 +93,9 @@ class _$SketchLineCopyWithImpl<$Res, $Val extends SketchLine>
 abstract class _$$SketchLineImplCopyWith<$Res>
     implements $SketchLineCopyWith<$Res> {
   factory _$$SketchLineImplCopyWith(
-          _$SketchLineImpl value, $Res Function(_$SketchLineImpl) then) =
-      __$$SketchLineImplCopyWithImpl<$Res>;
+    _$SketchLineImpl value,
+    $Res Function(_$SketchLineImpl) then,
+  ) = __$$SketchLineImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Point> points, int color, double width});
@@ -100,8 +106,9 @@ class __$$SketchLineImplCopyWithImpl<$Res>
     extends _$SketchLineCopyWithImpl<$Res, _$SketchLineImpl>
     implements _$$SketchLineImplCopyWith<$Res> {
   __$$SketchLineImplCopyWithImpl(
-      _$SketchLineImpl _value, $Res Function(_$SketchLineImpl) _then)
-      : super(_value, _then);
+    _$SketchLineImpl _value,
+    $Res Function(_$SketchLineImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of SketchLine
   /// with the given fields replaced by the non-null parameter values.
@@ -112,31 +119,33 @@ class __$$SketchLineImplCopyWithImpl<$Res>
     Object? color = null,
     Object? width = null,
   }) {
-    return _then(_$SketchLineImpl(
-      points: null == points
-          ? _value._points
-          : points // ignore: cast_nullable_to_non_nullable
-              as List<Point>,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as int,
-      width: null == width
-          ? _value.width
-          : width // ignore: cast_nullable_to_non_nullable
-              as double,
-    ));
+    return _then(
+      _$SketchLineImpl(
+        points: null == points
+            ? _value._points
+            : points // ignore: cast_nullable_to_non_nullable
+                  as List<Point>,
+        color: null == color
+            ? _value.color
+            : color // ignore: cast_nullable_to_non_nullable
+                  as int,
+        width: null == width
+            ? _value.width
+            : width // ignore: cast_nullable_to_non_nullable
+                  as double,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$SketchLineImpl implements _SketchLine {
-  const _$SketchLineImpl(
-      {required final List<Point> points,
-      required this.color,
-      required this.width})
-      : _points = points;
+  const _$SketchLineImpl({
+    required final List<Point> points,
+    required this.color,
+    required this.width,
+  }) : _points = points;
 
   factory _$SketchLineImpl.fromJson(Map<String, dynamic> json) =>
       _$$SketchLineImplFromJson(json);
@@ -178,7 +187,11 @@ class _$SketchLineImpl implements _SketchLine {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_points), color, width);
+    runtimeType,
+    const DeepCollectionEquality().hash(_points),
+    color,
+    width,
+  );
 
   /// Create a copy of SketchLine
   /// with the given fields replaced by the non-null parameter values.
@@ -190,17 +203,16 @@ class _$SketchLineImpl implements _SketchLine {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SketchLineImplToJson(
-      this,
-    );
+    return _$$SketchLineImplToJson(this);
   }
 }
 
 abstract class _SketchLine implements SketchLine {
-  const factory _SketchLine(
-      {required final List<Point> points,
-      required final int color,
-      required final double width}) = _$SketchLineImpl;
+  const factory _SketchLine({
+    required final List<Point> points,
+    required final int color,
+    required final double width,
+  }) = _$SketchLineImpl;
 
   factory _SketchLine.fromJson(Map<String, dynamic> json) =
       _$SketchLineImpl.fromJson;

@@ -12,11 +12,13 @@ abstract class Utils {
     required Point lineStart,
     required Point lineEnd,
   }) {
-    final numerator = ((lineEnd.x - lineStart.x) * (lineStart.y - point.y) -
-            (lineStart.x - point.x) * (lineEnd.y - lineStart.y))
-        .abs();
-    final denominator =
-        sqrt(pow(lineEnd.x - lineStart.x, 2) + pow(lineEnd.y - lineStart.y, 2));
+    final numerator =
+        ((lineEnd.x - lineStart.x) * (lineStart.y - point.y) -
+                (lineStart.x - point.x) * (lineEnd.y - lineStart.y))
+            .abs();
+    final denominator = sqrt(
+      pow(lineEnd.x - lineStart.x, 2) + pow(lineEnd.y - lineStart.y, 2),
+    );
     return numerator / denominator;
   }
 

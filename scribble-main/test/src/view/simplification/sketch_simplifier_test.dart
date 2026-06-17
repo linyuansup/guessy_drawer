@@ -25,14 +25,7 @@ void main() {
 
         expect(
           simplified,
-          line.copyWith(
-            points: [
-              points[0],
-              points[2],
-              points[3],
-              points[4],
-            ],
-          ),
+          line.copyWith(points: [points[0], points[2], points[3], points[4]]),
         );
       });
     });
@@ -72,22 +65,12 @@ void main() {
           const Sketch(
             lines: [
               SketchLine(
-                points: [
-                  Point(0, 0),
-                  Point(2, 0),
-                  Point(3, 3),
-                  Point(4, 0),
-                ],
+                points: [Point(0, 0), Point(2, 0), Point(3, 3), Point(4, 0)],
                 color: 0xFF000000,
                 width: 10,
               ),
               SketchLine(
-                points: [
-                  Point(0, 0),
-                  Point(2, 0),
-                  Point(3, 3),
-                  Point(4, 0),
-                ],
+                points: [Point(0, 0), Point(2, 0), Point(3, 3), Point(4, 0)],
                 color: 0xFF000000,
                 width: 10,
               ),

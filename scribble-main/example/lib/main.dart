@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Scribble',
       theme: ThemeData.from(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+      ),
       home: const HomePage(title: 'Scribble'),
     );
   }
@@ -97,29 +98,30 @@ class _HomePageState extends State<HomePage> {
                                   setState(() => _simulatePressure = v),
                             ),
                             const SizedBox(width: 8),
-                            const Text("Simulate Pressure")
+                            const Text("Simulate Pressure"),
                           ],
                         ),
                         _buildPointerModeSwitcher(context),
                       ],
                     ),
                   ),
-                  const Divider(
-                    height: 32,
-                  ),
+                  const Divider(height: 32),
                   Row(
                     children: [
                       ValueListenableBuilder(
-                        valueListenable: notifier.select((value) => value.lines
-                            .expand((element) => element.points)
-                            .length),
+                        valueListenable: notifier.select(
+                          (value) => value.lines
+                              .expand((element) => element.points)
+                              .length,
+                        ),
                         builder: (context, value, child) =>
                             Text("Simplification:\n($value points)"),
                       ),
                       Expanded(
                         child: ValueListenableBuilder(
-                          valueListenable: notifier
-                              .select((value) => value.simplificationTolerance),
+                          valueListenable: notifier.select(
+                            (value) => value.simplificationTolerance,
+                          ),
                           builder: (context, value, child) => Slider(
                             value: value,
                             max: 10,
@@ -137,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -200,7 +202,7 @@ class _HomePageState extends State<HomePage> {
           TextButton(
             onPressed: Navigator.of(context).pop,
             child: const Text("Close"),
-          )
+          ),
         ],
       ),
     );
@@ -221,7 +223,7 @@ class _HomePageState extends State<HomePage> {
           TextButton(
             onPressed: Navigator.of(context).pop,
             child: const Text("Close"),
-          )
+          ),
         ],
       ),
     );
@@ -235,11 +237,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           for (final w in notifier.widths)
-            _buildStrokeButton(
-              context,
-              strokeWidth: w,
-              state: state,
-            ),
+            _buildStrokeButton(context, strokeWidth: w, state: state),
         ],
       ),
     );
@@ -264,15 +262,16 @@ class _HomePageState extends State<HomePage> {
             width: strokeWidth * 2,
             height: strokeWidth * 2,
             decoration: BoxDecoration(
-                color: state.map(
-                  drawing: (s) => Color(s.selectedColor),
-                  erasing: (_) => Colors.transparent,
-                ),
-                border: state.map(
-                  drawing: (_) => null,
-                  erasing: (_) => Border.all(width: 1),
-                ),
-                borderRadius: BorderRadius.circular(50.0)),
+              color: state.map(
+                drawing: (s) => Color(s.selectedColor),
+                erasing: (_) => Colors.transparent,
+              ),
+              border: state.map(
+                drawing: (_) => null,
+                erasing: (_) => Border.all(width: 1),
+              ),
+              borderRadius: BorderRadius.circular(50.0),
+            ),
           ),
         ),
       ),
@@ -296,29 +295,28 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildPointerModeSwitcher(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: notifier.select(
-          (value) => value.allowedPointersMode,
-        ),
-        builder: (context, value, child) {
-          return SegmentedButton<ScribblePointerMode>(
-            multiSelectionEnabled: false,
-            emptySelectionAllowed: false,
-            onSelectionChanged: (v) => notifier.setAllowedPointersMode(v.first),
-            segments: const [
-              ButtonSegment(
-                value: ScribblePointerMode.all,
-                icon: Icon(Icons.touch_app),
-                label: Text("All pointers"),
-              ),
-              ButtonSegment(
-                value: ScribblePointerMode.penOnly,
-                icon: Icon(Icons.draw),
-                label: Text("Pen only"),
-              ),
-            ],
-            selected: {value},
-          );
-        });
+      valueListenable: notifier.select((value) => value.allowedPointersMode),
+      builder: (context, value, child) {
+        return SegmentedButton<ScribblePointerMode>(
+          multiSelectionEnabled: false,
+          emptySelectionAllowed: false,
+          onSelectionChanged: (v) => notifier.setAllowedPointersMode(v.first),
+          segments: const [
+            ButtonSegment(
+              value: ScribblePointerMode.all,
+              icon: Icon(Icons.touch_app),
+              label: Text("All pointers"),
+            ),
+            ButtonSegment(
+              value: ScribblePointerMode.penOnly,
+              icon: Icon(Icons.draw),
+              label: Text("Pen only"),
+            ),
+          ],
+          selected: {value},
+        );
+      },
+    );
   }
 
   Widget _buildEraserButton(BuildContext context) {
@@ -334,13 +332,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildColorButton(
-    BuildContext context, {
-    required Color color,
-  }) {
+  Widget _buildColorButton(BuildContext context, {required Color color}) {
     return ValueListenableBuilder(
-      valueListenable: notifier.select((value) =>
-          value is Drawing && value.selectedColor == color.toARGB32()),
+      valueListenable: notifier.select(
+        (value) => value is Drawing && value.selectedColor == color.toARGB32(),
+      ),
       builder: (context, value, child) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: ColorButton(

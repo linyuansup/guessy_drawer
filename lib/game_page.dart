@@ -132,15 +132,31 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = const Color(0xFF3B82F6);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
-                border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+                gradient: LinearGradient(
+                  colors: [primary, primary.withOpacity(0.85)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.06),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(12),
+                ),
               ),
               child: Row(
                 children: [
@@ -149,28 +165,53 @@ class _GamePageState extends State<GamePage> {
                     child: Text(
                       widget.question,
                       style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(flex: 3, child: _buildToolbar()),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.04),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: _buildToolbar(),
+                    ),
+                  ),
                 ],
               ),
             ),
             Expanded(
-              child: Container(
-                margin: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey[300]!),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Scribble(notifier: _notifier, drawPen: true),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Material(
+                  elevation: 4,
+                  borderRadius: BorderRadius.circular(12),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Container(
+                      color: Colors.white,
+                      child: Scribble(notifier: _notifier, drawPen: true),
+                    ),
+                  ),
                 ),
               ),
             ),

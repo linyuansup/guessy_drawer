@@ -26,11 +26,33 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = const Color(0xFF3B82F6);
+
     return MaterialApp(
       title: 'Drawer App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: primary),
+        scaffoldBackgroundColor: Colors.grey[50],
+        appBarTheme: AppBarTheme(
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          elevation: 2,
+          centerTitle: true,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 14,
+          ),
+        ),
+        snackBarTheme: SnackBarThemeData(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
       ),
       initialRoute: '/',
       onGenerateRoute: (settings) {

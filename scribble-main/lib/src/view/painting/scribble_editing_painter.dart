@@ -42,10 +42,7 @@ class ScribbleEditingPainter extends CustomPainter with SketchLinePathMixin {
       erasing: (_) => null,
     );
     if (activeLine != null) {
-      final path = getPathForLine(
-        activeLine,
-        scaleFactor: state.scaleFactor,
-      );
+      final path = getPathForLine(activeLine, scaleFactor: state.scaleFactor);
       if (path != null) {
         paint.color = Color(activeLine.color);
         canvas.drawPath(path, paint);

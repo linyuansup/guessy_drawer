@@ -78,9 +78,11 @@ class Scribble extends StatelessWidget {
             : GestureCatcher(
                 pointerKindsToCatch: state.supportedPointerKinds,
                 child: MouseRegion(
-                  cursor: drawCurrentTool &&
-                          state.supportedPointerKinds
-                              .contains(PointerDeviceKind.mouse)
+                  cursor:
+                      drawCurrentTool &&
+                          state.supportedPointerKinds.contains(
+                            PointerDeviceKind.mouse,
+                          )
                       ? SystemMouseCursors.none
                       : MouseCursor.defer,
                   onExit: notifier.onPointerExit,

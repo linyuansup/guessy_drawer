@@ -10,11 +10,8 @@ part 'point.g.dart';
 @Freezed()
 class Point with _$Point {
   /// {@macro point}
-  const factory Point(
-    double x,
-    double y, {
-    @Default(0.5) double pressure,
-  }) = _Point;
+  const factory Point(double x, double y, {@Default(0.5) double pressure}) =
+      _Point;
   const Point._();
 
   /// Constructs a point from a JSON object.

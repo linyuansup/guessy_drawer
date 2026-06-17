@@ -44,10 +44,7 @@ void main() {
             : emptySketch,
       );
 
-      sut = ScribbleNotifier(
-        sketch: sketch,
-        simplifier: simplifier,
-      );
+      sut = ScribbleNotifier(sketch: sketch, simplifier: simplifier);
     });
 
     group("constructor", () {

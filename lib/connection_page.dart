@@ -46,9 +46,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
       if (!mounted) return;
 
-      Navigator.of(context).pushReplacementNamed(
-        '/home',
-      );
+      Navigator.of(context).pushReplacementNamed('/home');
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -60,86 +58,102 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = const Color(0xFF3B82F6);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('连接服务器'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Icon(
-              Icons.cloud_sync,
-              size: 80,
-              color: Colors.blue,
-            ),
-            const SizedBox(height: 32),
-            const Text(
-              'Drawer App',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+      appBar: AppBar(title: const Text('连接服务器'), backgroundColor: primary),
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520),
+            child: Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 48),
-            TextField(
-              controller: _addressController,
-              decoration: const InputDecoration(
-                labelText: '服务器地址',
-                hintText: '例如: localhost 或 192.168.1.1',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.computer),
-              ),
-              keyboardType: TextInputType.url,
-              enabled: !_isConnecting,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: _portController,
-              decoration: const InputDecoration(
-                labelText: '端口',
-                hintText: '例如: 8080',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.numbers),
-              ),
-              keyboardType: TextInputType.number,
-              enabled: !_isConnecting,
-            ),
-            if (_errorMessage != null) ...[
-              const SizedBox(height: 16),
-              Text(
-                _errorMessage!,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-            const SizedBox(height: 32),
-            FilledButton(
-              onPressed: _isConnecting ? null : _connect,
+              margin: const EdgeInsets.all(24),
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: _isConnecting
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    : const Text(
-                        '连接',
-                        style: TextStyle(fontSize: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 28,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Icon(Icons.cloud_sync, size: 72, color: primary),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Drawer App',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    TextField(
+                      controller: _addressController,
+                      decoration: InputDecoration(
+                        labelText: '服务器地址',
+                        hintText: '例如: localhost 或 192.168.1.1',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        prefixIcon: const Icon(Icons.computer),
+                      ),
+                      keyboardType: TextInputType.url,
+                      enabled: !_isConnecting,
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: _portController,
+                      decoration: InputDecoration(
+                        labelText: '端口',
+                        hintText: '例如: 8080',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        prefixIcon: const Icon(Icons.numbers),
+                      ),
+                      keyboardType: TextInputType.number,
+                      enabled: !_isConnecting,
+                    ),
+                    if (_errorMessage != null) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        _errorMessage!,
+                        style: const TextStyle(color: Colors.red, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                    const SizedBox(height: 18),
+                    FilledButton(
+                      onPressed: _isConnecting ? null : _connect,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: _isConnecting
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text('连接', style: TextStyle(fontSize: 16)),
+                      ),
+                      style: FilledButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

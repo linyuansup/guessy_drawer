@@ -12,7 +12,8 @@ part of 'sketch.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Sketch _$SketchFromJson(Map<String, dynamic> json) {
   return _Sketch.fromJson(json);
@@ -53,23 +54,25 @@ class _$SketchCopyWithImpl<$Res, $Val extends Sketch>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? lines = null,
-  }) {
-    return _then(_value.copyWith(
-      lines: null == lines
-          ? _value.lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<SketchLine>,
-    ) as $Val);
+  $Res call({Object? lines = null}) {
+    return _then(
+      _value.copyWith(
+            lines: null == lines
+                ? _value.lines
+                : lines // ignore: cast_nullable_to_non_nullable
+                      as List<SketchLine>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$SketchImplCopyWith<$Res> implements $SketchCopyWith<$Res> {
   factory _$$SketchImplCopyWith(
-          _$SketchImpl value, $Res Function(_$SketchImpl) then) =
-      __$$SketchImplCopyWithImpl<$Res>;
+    _$SketchImpl value,
+    $Res Function(_$SketchImpl) then,
+  ) = __$$SketchImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<SketchLine> lines});
@@ -80,22 +83,23 @@ class __$$SketchImplCopyWithImpl<$Res>
     extends _$SketchCopyWithImpl<$Res, _$SketchImpl>
     implements _$$SketchImplCopyWith<$Res> {
   __$$SketchImplCopyWithImpl(
-      _$SketchImpl _value, $Res Function(_$SketchImpl) _then)
-      : super(_value, _then);
+    _$SketchImpl _value,
+    $Res Function(_$SketchImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Sketch
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? lines = null,
-  }) {
-    return _then(_$SketchImpl(
-      lines: null == lines
-          ? _value._lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<SketchLine>,
-    ));
+  $Res call({Object? lines = null}) {
+    return _then(
+      _$SketchImpl(
+        lines: null == lines
+            ? _value._lines
+            : lines // ignore: cast_nullable_to_non_nullable
+                  as List<SketchLine>,
+      ),
+    );
   }
 }
 
@@ -143,9 +147,7 @@ class _$SketchImpl implements _Sketch {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SketchImplToJson(
-      this,
-    );
+    return _$$SketchImplToJson(this);
   }
 }
 

@@ -14,8 +14,5 @@ abstract interface class Simplifier {
   /// simplification. A value of 0.0 will result in no simplification.
   /// Defaults to 50px.
   /// The exact effect of the value will depend on the implementation.
-  List<Point> simplify(
-    List<Point> points, {
-    double pixelTolerance = 50.0,
-  });
+  List<Point> simplify(List<Point> points, {double pixelTolerance = 50.0});
 }

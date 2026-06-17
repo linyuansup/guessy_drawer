@@ -11,9 +11,7 @@ part 'sketch.g.dart';
 @freezed
 class Sketch with _$Sketch {
   /// Represents a sketch with a list of [SketchLine]s.
-  const factory Sketch({
-    required List<SketchLine> lines,
-  }) = _Sketch;
+  const factory Sketch({required List<SketchLine> lines}) = _Sketch;
 
   /// Constructs a sketch from a JSON object.
   factory Sketch.fromJson(Map<String, dynamic> json) => _$SketchFromJson(json);
